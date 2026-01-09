@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      transition: background 0.5s;
+    }
+    .info {
+      text-align: center;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .count { font-size: 20vw; font-weight: bold; }
+    .label { font-size: 5vw; }
+  </style>
+</head>
+<body>
+  <div class="info">
+    <div class="count" id="count">-</div>
+    <div class="label">kort venter</div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://vrwhbfwyqmvlyzmnikpy.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_tQS8q9naFwtJFpgYsSHkOg_ddM7BgBe';
+
+    async function updateStatus() {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/trello_status?id=eq.1`,
+          { headers: { 'apikey': SUPABASE_KEY } }
+        );
+        const [data] = await res.json();
+        
+        document.body.style.background = data.color;
+        document.getElementById('count').textContent = data.card_count;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    updateStatus();
+    setInterval(updateStatus, 10000);
+  </script>
+</body>
+</html>
