@@ -18,16 +18,15 @@
       text-align: center;
       color: white;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      padding: 20px;
     }
-    .name { font-size: 8vw; font-weight: bold; }
-    .count { font-size: 4vw; margin-top: 20px; opacity: 0.8; }
+    .count { font-size: 20vw; font-weight: bold; }
+    .label { font-size: 5vw; }
   </style>
 </head>
 <body>
   <div class="info">
-    <div class="name" id="name">-</div>
-    <div class="count" id="count"></div>
+    <div class="count" id="count">-</div>
+    <div class="label">kort venter</div>
   </div>
 
   <script>
@@ -43,8 +42,7 @@
         const [data] = await res.json();
         
         document.body.style.background = data.color;
-        document.getElementById('name').textContent = data.card_name || 'Ingen kort';
-        document.getElementById('count').textContent = data.card_count + ' kort venter';
+        document.getElementById('count').textContent = data.card_count;
       } catch (e) {
         console.error(e);
       }
